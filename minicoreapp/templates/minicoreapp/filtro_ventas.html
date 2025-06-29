@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mini Core - Resumen de Comisiones</title>
+</head>
+<body>
+    <h1>Filtrar Ventas por Rango de Fechas</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="fecha_inicio">Fecha Inicio:</label>
+        <input type="date" name="fecha_inicio" id="fecha_inicio" required value="{{ fecha_inicio }}">
+
+        <label for="fecha_fin">Fecha Fin:</label>
+        <input type="date" name="fecha_fin" id="fecha_fin" required value="{{ fecha_fin }}">
+
+        <button type="submit">Filtrar y Calcular</button>
+    </form>
+
+    {% if resultados %}
+        <h2>Resultados de Comisiones</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Vendedor</th>
+                    <th>Total Ventas</th>
+                    <th>Porcentaje Aplicado</th>
+                    <th>Comisión Calculada</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resultado in resultados %}
+                <tr>
+                    <td>{{ resultado.vendedor }}</td>
+                    <td>${{ resultado.total_ventas }}</td>
+                    <td>{{ resultado.porcentaje }}%</td>
+                    <td>${{ resultado.comision }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
